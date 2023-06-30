@@ -24,13 +24,15 @@ export default {
 	},
 
 	getAnswer(input: string | undefined): string | undefined {
+		if (input === "/start" || input === "/start@tebakgenderbot")
+			return "Langsung aja ketik nama-nama orang yang mau ditebak gendernya.";
 		return input
-			?.split("\n")
+			?.split(/(?:\n|,)+/)
 			.map(s => s.trim())
-			.filter(s => s && !(s === "/start" || s === "/start@tebakgenderbot"))
+			.filter(s => s)
 			.map(name => {
 				const { gender, confidence } = tebakgender(name);
-				return `${name}: ${gender === "L" ? "laki-laki" : "perempuan"}   (${Math.round(100 * confidence)}% yakin)`;
+				return `${name}: ${gender === "L" ? "laki-laki" : "perempuan"}    (${Math.round(100 * confidence)}% yakin)`;
 			})
 			.join("\n");
 	}
