@@ -25,7 +25,7 @@ export default {
 		return input
 			.split("\n")
 			.map(s => s.trim())
-			.filter(s => s)
+			.filter(s => s && !(s === "/start" || s === "/start@tebakgenderbot"))
 			.map(name => {
 				const { gender, confidence } = tebakgender(name);
 				return `${name}: ${gender} (${Math.round(100 * confidence)}% yakin)`;
