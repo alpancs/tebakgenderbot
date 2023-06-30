@@ -1,3 +1,5 @@
+import tebakgender from 'tebakgender';
+
 export default {
 	async fetch(request: Request): Promise<Response> {
 		const { pathname } = new URL(request.url);
@@ -24,7 +26,10 @@ export default {
 			.split("\n")
 			.map(s => s.trim())
 			.filter(s => s)
-			.map(s => `${s}: ?`)
+			.map(name => {
+				const { gender, confidence } = tebakgender(name);
+				return `${name}: ${gender} (${Math.round(100 * confidence)}% yakin)`;
+			})
 			.join("\n");
 	}
 };
