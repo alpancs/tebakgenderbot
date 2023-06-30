@@ -11,19 +11,21 @@ export default {
 	async handleWebhookTelegram(request: Request): Promise<Response> {
 		try {
 			const update = await request.json<Update>();
-			return update.message?.text ? Response.json({
+			const answer = this.getAnswer(update.message?.text);
+			if (answer) return Response.json({
 				method: "sendMessage",
-				chat_id: update.message.chat.id,
-				text: this.getAnswer(update.message?.text),
-			}) : new Response();
+				chat_id: update.message?.chat.id,
+				text: answer,
+			});
 		} catch (error: any) {
 			return new Response(error, { status: 422 })
 		}
+		return new Response();
 	},
 
-	getAnswer(input: string): string {
+	getAnswer(input: string | undefined): string | undefined {
 		return input
-			.split("\n")
+			?.split("\n")
 			.map(s => s.trim())
 			.filter(s => s && !(s === "/start" || s === "/start@tebakgenderbot"))
 			.map(name => {
