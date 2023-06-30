@@ -30,7 +30,7 @@ export default {
 			.filter(s => s && !(s === "/start" || s === "/start@tebakgenderbot"))
 			.map(name => {
 				const { gender, confidence } = tebakgender(name);
-				return `${name}: ${gender} (${Math.round(100 * confidence)}% yakin)`;
+				return `${name}: ${gender === "L" ? "Laki-laki" : "Perempuan"}   (${Math.round(100 * confidence)}% yakin)`;
 			})
 			.join("\n");
 	}
