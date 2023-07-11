@@ -1,6 +1,6 @@
 import tebakgender from 'tebakgender';
 
-const genderToText: { [key: string]: string } = { L: "laki-laki 👨", P: "perempuan 👩" };
+const genderToText: { [key: string]: string } = { L: "laki-laki 👳", P: "perempuan 🧕" };
 
 export default {
 	async fetch(request: Request): Promise<Response> {
