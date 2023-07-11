@@ -1,5 +1,7 @@
 import tebakgender from 'tebakgender';
 
+const genderToText: { [key: string]: string } = { L: "laki-laki 👨", P: "perempuan 👩" };
+
 export default {
 	async fetch(request: Request): Promise<Response> {
 		const { pathname } = new URL(request.url);
@@ -32,8 +34,8 @@ export default {
 			.filter(s => s)
 			.map(name => {
 				const { gender, confidence } = tebakgender(name);
-				return `${name}: ${gender === "L" ? "laki-laki" : "perempuan"}    (${Math.round(100 * confidence)}% yakin)`;
+				return `${name}: ${genderToText[gender]}    (${(100 * confidence).toFixed(1)}% yakin)`;
 			})
 			.join("\n");
-	}
+	},
 };
