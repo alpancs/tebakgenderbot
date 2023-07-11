@@ -34,7 +34,7 @@ export default {
 			.filter(s => s)
 			.map(name => {
 				const { gender, confidence } = tebakgender(name);
-				return `${name}: ${genderToText[gender]}    (${(100 * confidence).toFixed(1).replace(/\.0+$/, "")}% yakin)`;
+				return `${name}: ${genderToText[gender]}\t(${(100 * confidence).toFixed(1).replace(/\.0+$/, "")}% yakin)`;
 			})
 			.join("\n");
 	},
