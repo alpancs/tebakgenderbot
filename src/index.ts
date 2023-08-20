@@ -7,6 +7,8 @@ export default {
 		const { pathname } = new URL(request.url);
 		if (request.method == "POST" && pathname == "/webhook/telegram")
 			return this.handleWebhookTelegram(request);
+		if (request.method == "GET" && pathname == "/api/v1/tebakgender")
+			return this.handleAPITebakgender(request);
 		return new Response(undefined, { status: 404 });
 	},
 
@@ -37,5 +39,10 @@ export default {
 				return `${name}: ${genderToText[gender]}\t(${(100 * confidence).toFixed(1).replace(/\.0+$/, "")}% yakin)`;
 			})
 			.join("\n");
+	},
+
+	async handleAPITebakgender(request: Request): Promise<Response> {
+		const name = new URL(request.url).searchParams.get("name") ?? "";
+		return Response.json(tebakgender(name));
 	},
 };
