@@ -22,7 +22,8 @@ export default {
 				text: answer,
 			});
 		} catch (error: any) {
-			return new Response(error, { status: 422 })
+			console.error("handleWebhookTelegram error:", error?.stack ?? error);
+			return new Response("Invalid request payload", { status: 422 });
 		}
 		return new Response();
 	},
